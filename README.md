@@ -1,40 +1,178 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# API de Consulta Médica (iclinicA)
 
-First, run the development server:
+Este proyecto proporciona dos endpoints principales para generar preguntas y respuestas de consulta médica utilizando modelos de IA. Las APIs aprovechan los modelos GPT de OpenAI y Gemini de Google para proporcionar preguntas relevantes y respuestas detalladas de consulta basadas en la información del paciente.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Tabla de Contenidos
+
+- [Instalación](#instalación)
+- [Variables de Entorno](#variables-de-entorno)
+- [Endpoints de la API](#endpoints-de-la-api)
+  - [/api/questions](#apiquestions)
+  - [/api/consultations](#apiconsultations)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+
+## Instalación
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/jpcastilloarce/iclinica-api.git
+   cd iclinica-api
+   ```
+
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+
+3. Ejecuta el servidor de desarrollo:
+   ```bash
+   npm run dev
+   ```
+
+## Variables de Entorno
+
+Crea un archivo `.env.local` en el directorio raíz y añade las siguientes variables de entorno:
+
+```env
+OPENAI_API_KEY=tu-clave-api-de-openai
+GOOGLE_GENERATIVE_AI_API_KEY=tu-clave-api-de-google-generative-ai
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Endpoints de la API
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### /api/questions
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Este endpoint genera una lista de preguntas relevantes basadas en la información y síntomas del paciente.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+**Solicitud:**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- Método: `POST`
+- Cuerpo:
+  ```json
+  {
+    "doctor": "gpt" | "gemini",
+    "patientPreForm": {
+      "patientInfo": {
+        "country": "string",
+        "age": "number",
+        "gender": "string",
+        "weight": "number",
+        "height": "number"
+      },
+      "reason": "string",
+      "riskFactors": {
+        "smokes": "boolean",
+        "hasHypertension": "boolean",
+        "hasDiabetes": "boolean",
+        "hasAsthma": "boolean",
+        "hadStroke": "boolean",
+        "hadHeartAttack": "boolean"
+      },
+      "symptoms": [
+        {
+          "location": "string",
+          "description": "string",
+          "duration": "string",
+          "intensity": "number"
+        }
+      ]
+    }
+  }
+  ```
 
-## Learn More
+**Respuesta:**
 
-To learn more about Next.js, take a look at the following resources:
+- Éxito: `200 OK`
+  ```json
+  {
+    "preguntas": [
+      {
+        "pregunta": "string"
+      }
+    ]
+  }
+  ```
+- Error: `400 Bad Request` o `500 Internal Server Error`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### /api/consultations
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Este endpoint proporciona una respuesta detallada de consulta basada en la información y síntomas del paciente.
 
-## Deploy on Vercel
+**Solicitud:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Método: `POST`
+- Cuerpo:
+  ```json
+  {
+    "doctor": "gpt" | "gemini",
+    "patientForm": {
+      "patientInfo": {
+        "country": "string",
+        "age": "number",
+        "gender": "string",
+        "weight": "number",
+        "height": "number"
+      },
+      "reason": "string",
+      "riskFactors": {
+        "smokes": "boolean",
+        "hasHypertension": "boolean",
+        "hasDiabetes": "boolean",
+        "hasAsthma": "boolean",
+        "hadStroke": "boolean",
+        "hadHeartAttack": "boolean"
+      },
+      "symptoms": [
+        {
+          "location": "string",
+          "description": "string",
+          "duration": "string",
+          "intensity": "number"
+        }
+      ],
+      "aditionalQuestions": [
+        {
+          "question": "string",
+          "answer": "string"
+        }
+      ],
+      "aditionalConetxt": {
+        "contacts": "string",
+        "travels": "string"
+      }
+    }
+  }
+  ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Respuesta:**
+
+- Éxito: `200 OK`
+  ```json
+  {
+    "response": "string"
+  }
+  ```
+- Error: `400 Bad Request` o `500 Internal Server Error`
+
+## Estructura del Proyecto
+
+```plaintext
+src/
+│
+├── pages/
+│   ├── api/
+│   │   ├── questions.ts
+│   │   └── consultations.ts
+│
+├── utils/
+│   ├── env.ts
+│   ├── prompt.ts
+│   ├── types.ts
+│   └── generateQuery.ts
+│
+└── README.md
+```
+
+- **pages/api/**: Contiene los manejadores de rutas API.
+- **utils/**: Contiene funciones y tipos utilitarios usados en todo el proyecto.
