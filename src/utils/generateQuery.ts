@@ -6,8 +6,8 @@ import { z } from 'zod';
 export async function generateQuery(doctor: string, prompt: string, type: 'questions' | 'consultation') {
   if (type === 'questions') {
     const schema = z.object({
-      preguntas: z.array(z.object({
-        pregunta: z.string()
+      questions: z.array(z.object({
+        question: z.string()
       }))
     });
 
