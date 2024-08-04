@@ -12,8 +12,8 @@ export async function generateQuery(doctor: string, prompt: string, type: 'quest
     });
 
     return doctor === 'gpt'
-      ? await generateObject({ model: openai("gpt-4o-mini"), system: "Eres un doctor experto en medicina familiar", prompt, schema })
-      : await generateObject({ model: google("models/gemini-1.5-pro"), system: "Eres un doctor experto en medicina familiar", prompt, schema });
+      ? (await generateObject({ model: openai("gpt-4o-mini"), system: "Eres un doctor experto en medicina familiar", prompt, schema })).object
+      : (await generateObject({ model: google("models/gemini-1.5-pro"), system: "Eres un doctor experto en medicina familiar", prompt, schema })).object;
   } else {
     return doctor === 'gpt'
       ? (await generateText({ model: openai("gpt-4o-mini"), system: "Eres un doctor experto en medicina familiar", prompt })).text

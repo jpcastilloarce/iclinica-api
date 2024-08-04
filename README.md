@@ -86,9 +86,9 @@ Este endpoint genera una lista de preguntas relevantes basadas en la informació
 - Éxito: `200 OK`
   ```json
   {
-    "preguntas": [
+    "questions": [
       {
-        "pregunta": "string"
+        "question": "string"
       }
     ]
   }
