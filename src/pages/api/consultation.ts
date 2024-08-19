@@ -4,9 +4,9 @@ import { createConsultationPrompt } from '@/utils/prompt';
 import { generateQuery } from '@/utils/generateQuery';
 import { PatientForm } from '@/utils/types';
 export const config = {
-  maxDuration: 300,
+  maxDuration: 60,
 };
-export const maxDuration = 300
+export const maxDuration = 60
 checkEnvVariables();
 
 export default async function handler(
