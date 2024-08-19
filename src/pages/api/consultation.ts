@@ -3,6 +3,9 @@ import { checkEnvVariables } from '@/utils/env';
 import { createConsultationPrompt } from '@/utils/prompt';
 import { generateQuery } from '@/utils/generateQuery';
 import { PatientForm } from '@/utils/types';
+export const config = {
+  maxDuration: 20,
+};
 
 checkEnvVariables();
 
