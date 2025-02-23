@@ -52,7 +52,7 @@ export function createConsultationPrompt(patientForm: PatientForm): string {
     const { patientInfo, reason, riskFactors, symptoms, aditionalQuestions, aditionalConetxt } = patientForm;
     return `
         Por favor, responde de manera amable, profesional y detallada a la 
-        siguiente consulta médica basada en la información proporcionada, al final no te despidas:
+        siguiente consulta médica basada en la información proporcionada, al final despidete como el Doctor Nacho:
         
         A continuación se muestra la información del paciente y los síntomas que presenta:
         **Información Básica del Paciente**
