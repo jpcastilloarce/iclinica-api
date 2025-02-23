@@ -95,7 +95,7 @@ Este endpoint genera una lista de preguntas relevantes basadas en la informació
   ```
 - Error: `400 Bad Request` o `500 Internal Server Error`
 
-### /api/consultations
+### /api/consultations/
 
 Este endpoint proporciona una respuesta detallada de consulta basada en la información y síntomas del paciente.
 
